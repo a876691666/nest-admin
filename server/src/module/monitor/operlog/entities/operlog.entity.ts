@@ -1,4 +1,5 @@
 export class Operlog {}
+import { blobJSONTransformer } from 'src/common/entities/transformer';
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
 @Entity('sys_oper_log', {
@@ -40,11 +41,11 @@ export class SysOperlogEntity {
   @Column({ type: 'varchar', name: 'oper_location', length: 255, default: '', comment: '操作地点' })
   public operLocation: string;
 
-  @Column({ type: 'varchar', name: 'oper_param', length: 2000, default: '', comment: '请求参数' })
-  public operParam: string;
+  @Column({ type: 'blob', name: 'oper_param', comment: '请求参数', transformer: blobJSONTransformer })
+  public operParam: any;
 
-  @Column({ type: 'varchar', name: 'json_result', length: 2000, default: '', comment: '返回参数' })
-  public jsonResult: string;
+  @Column({ type: 'blob', name: 'oper_result', comment: '返回参数 blob', transformer: blobJSONTransformer })
+  public operResult: any;
 
   @CreateDateColumn({ type: 'timestamp', name: 'oper_time', comment: '操作时间' })
   public operTime: Date;

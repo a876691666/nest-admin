@@ -62,7 +62,7 @@ export class OperlogService {
   /**
    * @description: 录入日志
    */
-  async logAction({ resultData, costTime, title, handlerName }) {
+  async logAction({ resultData, costTime, title, handlerName, errorMsg }: any) {
     const { originalUrl, method, headers, ip, body, query } = this.request;
     const { user } = this.request.user;
     const operLocation = await this.axiosService.getIpAddress(ip);
@@ -84,8 +84,9 @@ export class OperlogService {
       operLocation: operLocation,
       os: parser.os.toJSON().family,
       browser: parser.toAgent(),
-      operParam: JSON.stringify({ ...body, ...query }),
-      jsonResult: JSON.stringify(resultData),
+      operParam: { ...body, ...query },
+      operResult: resultData,
+      errorMsg,
     };
     // console.log('--------->>>>', user, params);
 

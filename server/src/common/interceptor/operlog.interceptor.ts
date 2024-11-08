@@ -1,6 +1,6 @@
 import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Reflector } from '@nestjs/core';
 
 import { OperlogService } from 'src/module/monitor/operlog/operlog.service';
@@ -22,21 +22,39 @@ export class OperlogInterceptor implements NestInterceptor {
 
     const now = Date.now();
 
-    return next.handle().pipe(
-      map((data) => {
-        const methodLink = `${className}.${handlerName}`;
-        const title = `${tagName}:${summary}`;
-        const costTime = Date.now() - now;
-        this.logger.log(`[${methodLink}] ${title} ${costTime}ms`);
+    return next
+      .handle()
+      .pipe(
+        map((data) => {
+          const methodLink = `${className}.${handlerName}`;
+          const title = `${tagName}:${summary}`;
+          const costTime = Date.now() - now;
+          this.logger.log(`[${methodLink}] ${title} ${costTime}ms`);
 
-        this.operlogService.logAction({
-          resultData: data,
-          handlerName: methodLink,
-          costTime,
-          title,
-        });
-        return data;
-      }),
-    );
+          this.operlogService.logAction({
+            resultData: data,
+            handlerName: methodLink,
+            costTime,
+            title,
+          });
+          return data;
+        }),
+      )
+      .pipe(
+        catchError((err) => {
+          const methodLink = `${className}.${handlerName}`;
+          const title = `${tagName}:${summary}`;
+          const costTime = Date.now() - now;
+          this.logger.error(`[${methodLink}] ${title} ${costTime}ms`);
+
+          this.operlogService.logAction({
+            handlerName: methodLink,
+            costTime,
+            title,
+            errorMsg: JSON.stringify(err.response),
+          });
+          return throwError(() => err);
+        }),
+      );
   }
 }
