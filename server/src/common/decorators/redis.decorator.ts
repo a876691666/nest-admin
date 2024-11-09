@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { get } from 'lodash';
-import { RedisService } from 'src/module/redis/redis.service';
+import { RedisService } from 'src/module/common/redis/redis.service';
 
 function getArgs(func) {
   const funcString = func.toString();

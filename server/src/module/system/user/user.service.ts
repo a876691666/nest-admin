@@ -2,7 +2,7 @@ import { Repository, In, Not } from 'typeorm';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import { RedisService } from 'src/module/redis/redis.service';
+import { RedisService } from 'src/module/common/redis/redis.service';
 import * as bcrypt from 'bcrypt';
 import { Response } from 'express';
 import { GetNowDate, GenerateUUID, Uniq } from 'src/common/utils/index';

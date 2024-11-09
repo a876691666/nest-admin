@@ -6,11 +6,11 @@ import { RegisterDto, LoginDto } from './dto/index';
 import { createMath, createText } from 'src/common/utils/captcha';
 import { ResultData } from 'src/common/utils/result';
 import { GenerateUUID } from 'src/common/utils/index';
-import { RedisService } from 'src/module/redis/redis.service';
+import { RedisService } from 'src/module/common/redis/redis.service';
 import { CacheEnum } from 'src/common/enum/index';
 import { ConfigService } from 'src/module/system/config/config.service';
 import { ClientInfo, ClientInfoDto } from 'src/common/decorators/common.decorator';
-import { NotRequireAuth, User, UserDto } from 'src/common/decorators/user.decorator';
+import { NotRequireAuth, User, UserDto } from 'src/module/system/user/user.decorator';
 
 @ApiTags('根目录')
 @Controller('/')

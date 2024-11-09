@@ -9,9 +9,9 @@ import { CreateUserDto, UpdateUserDto, ListUserDto, ChangeStatusDto, ResetPwdDto
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ResultData } from 'src/common/utils/result';
 import { GetNowDate } from 'src/common/utils';
-import { User, UserDto } from 'src/common/decorators/user.decorator';
+import { User, UserDto } from 'src/module/system/user/user.decorator';
 import { ClientInfo, ClientInfoDto } from 'src/common/decorators/common.decorator';
-import { OperlogInterceptor } from 'src/common/interceptor/operlog.interceptor';
+import { OperlogInterceptor } from 'src/module/monitor/operlog/operlog.interceptor';
 
 @ApiTags('用户管理')
 @ApiBearerAuth()

@@ -8,7 +8,7 @@ import * as Useragent from 'useragent';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { ResultData } from 'src/common/utils/result';
-import { AxiosService } from 'src/module/axios/axios.service';
+import { AxiosService } from 'src/module/common/axios/axios.service';
 
 @Injectable({ scope: Scope.REQUEST })
 export class OperlogService {
