@@ -30,6 +30,11 @@ async function bootstrap() {
     maxAge: 86400000 * 365,
   });
 
+  app.useStaticAssets(join(__dirname, '..', '../upload'), {
+    prefix: '/files/',
+    maxAge: 86400000 * 365,
+  });
+
   app.setGlobalPrefix(prefix);
   // 全局验证
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
